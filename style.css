@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box ;
+}
+
+header{
+    font-size: 2rem;
+}
+
+body{
+    background-color: #08AEEA;
+    background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%); 
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+}
+
+header,form {
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input{
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background: rgb(255, 255, 255);
+}
+.boton-lista{
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background: rgb(255, 255, 255);
+    color: rgb(2, 2, 2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.boton-lista:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(2, 2, 2);
+}
