@@ -42,3 +42,17 @@ header,form {
     background: rgb(255, 255, 255);
     color: rgb(2, 2, 2);
 }
+
+.titulo{
+    display: block;
+}
+
+.divSaludo{
+    min-width: 100vw;
+    display: flex;  
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    text-align: center;
+
+}

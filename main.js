@@ -2,41 +2,9 @@ const inputTareas = document.querySelector('.input');
 const botonLista = document.querySelector('.boton-lista');
 const listaTareas = document.querySelector('.lista-tareas');
 
-let nombreusuario = prompt("Ingrese su nombre de Usuario");
-if(nombreusuario!=null){ 
-document.write("Bienvenido, " + nombreusuario);
-}
-else{
-    alert("No has intruducido ningun nombre");
-}
-
-botonLista.addEventListener("click", anadirtarea);
-
-// Arrays
-
-let diasDelMes = [
-    {numero:1, dia:"Lunes"},
-    {numero:2, dia:"Martes"},
-    {numero:3, dia:"Miercoles"},
-    {numero:4, dia:"Jueves"},
-    {numero:5, dia:"Viernes"},
-    {numero:6, dia:"Sabado"},
-    {numero:7, dia:"Domingo"}  
-]
-//Añade un objeto al Array
-diasDelMes.push("Fin de la semana")
-//Busqueda mediante IndexOf
-let x= 0;
-x=prompt("")
-//Muestra el Array entero
-diasDelMes.forEach(element => {
-    console.log(element)
-});
-//Muestra un objeto a eleccion del Array
-let i=0;
-i=prompt("Que espacio del array quiere revisar (del 0 al 7)");
-console.log(diasDelMes[i])
-
+let nombre = prompt("Ingrese su nombre");
+const h2 = document.getElementsByTagName("h2")[0];
+h2.innerText = `Bienvenido a tu libreta ${nombre}! `;
 
 
 // Funciones
