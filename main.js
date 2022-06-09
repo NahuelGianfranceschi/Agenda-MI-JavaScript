@@ -6,6 +6,8 @@ let nombre = prompt("Ingrese su nombre");
 const h2 = document.getElementsByTagName("h2")[0];
 h2.innerText = `Bienvenido a tu libreta ${nombre}! `;
 
+//Event Listener
+botonLista.addEventListener("click", anadirtarea);
 
 // Funciones
 
@@ -17,7 +19,7 @@ function anadirtarea(event){
     divtareas.classList.add('tarea');
     // Lista
     const nuevatarea = document.createElement('li');
-    nuevatarea.innerText = 'nueva tarea';
+    nuevatarea.innerText = inputTareas.value;
     nuevatarea.classList.add('item-tarea');
     divtareas.appendChild(nuevatarea);
     //Botones

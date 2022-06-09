@@ -54,5 +54,36 @@ header,form {
     flex-wrap: nowrap;
     justify-content: center;
     text-align: center;
+}
+.contenedor-lista{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lista-tareas{
+    list-style: none;
+    min-width: 30%;
+}
+.tarea{
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(240, 255, 255);
+    color: rgb(15, 15, 15);
+    border-radius: 5px;
+}
 
+.tareas li{
+    flex: 1;
+}
+
+.btn-compl, .btn-tach{
+    border: none;
+    background-color: rgb(8, 174, 234);
+    padding: 1rem;
+    color: rgb(240, 248, 255);
+    cursor: pointer;
+    font-size: 1rem;
 }
