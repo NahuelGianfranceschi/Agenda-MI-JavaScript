@@ -2,12 +2,29 @@ const inputTareas = document.querySelector('.input');
 const botonLista = document.querySelector('.boton-lista');
 const listaTareas = document.querySelector('.lista-tareas');
 
-let nombre = prompt("Ingrese su nombre");
+let nombre = sessionStorage.getItem("nombre");
+if(!nombre){
+    nombre = prompt("Ingrese su Nombre");
+    sessionStorage.setItem("nombre", JSON.stringify (nombre));
+}
+
+//let nombre = prompt("Ingrese su nombre");
 const h2 = document.getElementsByTagName("h2")[0];
 h2.innerText = `Bienvenido a tu libreta ${nombre}! `;
+//sessionStorage.setItem("nombreUsuario", JSON.stringify(nombre));
+
+
+let modoPantalla = localStorage.getItem("modo");
+
+if(!modoPantalla)
+{
+     modoPantalla = "ligth";
+     nuevoModo="dark";
+}
 
 //Event Listener
 botonLista.addEventListener("click", anadirtarea);
+listaTareas.addEventListener("click", borrarCheckear)
 
 // Funciones
 
@@ -32,15 +49,48 @@ function anadirtarea(event){
     botontachar.innerHTML = `<i class="fas fa-trash"></i>`;
     botontachar.classList.add("btn-tach");
     divtareas.appendChild(botontachar);
+
     //Añadir a la lista
     listaTareas.appendChild(divtareas);
-}   
+    inputTareas.value = "";
+} 
 
-//function ordenar = () => {
-//    const completada = [];
-//    const porhacer = [];
-//    divtareas.childnodes.array.forEach(element => {
-//        element.classList.contains('completada') ? completada.push(element) : porhacer.push(el)
-//    });
-//    return [completada, porhacer];
-//}
+//Modo Oscuro   `<i class="fa-solid fa-circle-half-stroke"></i>`
+const botonmodo = document.createElement("button");
+botonmodo.innerText =`<i class="fa-solid fa-circle-half-stroke"></i>`;
+botonmodo.addEventListener("click", ()=>{
+    setMode(modoPantalla);
+    });
+document.body.appendChild(botonmodo);    
+    
+function setMode(modoActual){
+
+    if(modoActual==="ligth")
+    {
+        document.body.setAttribute("style", "background-color:black;color:white");
+        localStorage.setItem("modo", "dark");
+    }
+    else
+    {
+        document.body.setAttribute("style", "background-color:white;color:black");
+        localStorage.setItem("modo", "ligth");
+    }   
+}
+
+
+function borrarCheckear(event){
+    const item = event.target;
+    //Check Tarea
+    if(item.classList[0] === 'btn-compl')
+        {
+            const tarea = item.parentElement;
+            tarea.classList.toggle("completado");
+        }
+    //Borrar Tarea  
+    if(item.classList[0] === 'btn-tach') 
+        {
+            const tarea = item.parentElement;
+            tarea.remove();
+        }
+
+}
