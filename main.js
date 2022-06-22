@@ -2,25 +2,30 @@ const inputTareas = document.querySelector('.input');
 const botonLista = document.querySelector('.boton-lista');
 const listaTareas = document.querySelector('.lista-tareas');
 
-let nombre = sessionStorage.getItem("nombre");
-if(!nombre){
-    nombre = prompt("Ingrese su Nombre");
-    sessionStorage.setItem("nombre", JSON.stringify (nombre));
-}
+let {value: nombre} = Swal.fire({
+	title: 'Hola!',
+	text: 'Ingrese su Nombre',
+	icon: 'question',
+	confirmButtonText: 'Ok',
+	backdrop: true,
+	allowOutsideClick: false,
+	stopKeydownPropagation: false,
+	input: 'text',
+	inputPlaceholder: 'Nombre',
+});
+
+
+//let nombre = sessionStorage.getItem("nombre");
+//if(!nombre){
+//   nombre = prompt("Ingrese su Nombre");
+//    sessionStorage.setItem("nombre", JSON.stringify (nombre));
+//}
+
 
 //let nombre = prompt("Ingrese su nombre");
 const h2 = document.getElementsByTagName("h2")[0];
 h2.innerText = `Bienvenido a tu libreta ${nombre}! `;
 //sessionStorage.setItem("nombreUsuario", JSON.stringify(nombre));
-
-
-let modoPantalla = localStorage.getItem("modo");
-
-if(!modoPantalla)
-{
-     modoPantalla = "ligth";
-     nuevoModo="dark";
-}
 
 //Event Listener
 botonLista.addEventListener("click", anadirtarea);
@@ -56,26 +61,11 @@ function anadirtarea(event){
 } 
 
 //Modo Oscuro   `<i class="fa-solid fa-circle-half-stroke"></i>`
-const botonmodo = document.createElement("button");
-botonmodo.innerText =`<i class="fa-solid fa-circle-half-stroke"></i>`;
-botonmodo.addEventListener("click", ()=>{
-    setMode(modoPantalla);
-    });
-document.body.appendChild(botonmodo);    
-    
-function setMode(modoActual){
-
-    if(modoActual==="ligth")
-    {
-        document.body.setAttribute("style", "background-color:black;color:white");
-        localStorage.setItem("modo", "dark");
-    }
-    else
-    {
-        document.body.setAttribute("style", "background-color:white;color:black");
-        localStorage.setItem("modo", "ligth");
-    }   
-}
+const btnswitch = document.querySelector('#switch');
+btnswitch.addEventListener('click',() =>{
+    document.body.classList.toggle('dark');
+    btnswitch.classList.toggle('active');
+}) 
 
 
 function borrarCheckear(event){
