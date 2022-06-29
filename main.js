@@ -33,6 +33,15 @@ listaTareas.addEventListener("click", borrarCheckear)
 
 // Funciones
 
+
+    //fetch('http://api.weatherstack.com/')
+    fetch('https://api.openweathermap.org/data/2.5/weather?id=3435907&appid=36c912e4f5170f545ed41efcb4a76f6b')
+    .then ((res)=>res.json())
+    .then ((json)=>console.log(json))
+    .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))
+
+
+
 function anadirtarea(event){
     //Evitar que se refresque la pagina
     event.preventDefault();
