@@ -33,11 +33,37 @@ listaTareas.addEventListener("click", borrarCheckear)
 
 // Funciones
 
+    let temperaturaValor = document.getElementById('temperatura-valor')  
+    let temperaturaDescripcion = document.getElementById('temperatura-descripcion')  
+
+    let ubicacion = document.getElementById('ubicacion')  
+    let iconoAnimado = document.getElementById('icono-animado') 
+
+    let vientoVelocidad = document.getElementById('viento-velocidad') 
 
     //fetch('http://api.weatherstack.com/')
-    fetch('https://api.openweathermap.org/data/2.5/weather?id=3435907&appid=36c912e4f5170f545ed41efcb4a76f6b')
+    fetch('https://api.openweathermap.org/data/2.5/weather?id=3435907&lang=es&appid=36c912e4f5170f545ed41efcb4a76f6b')
     .then ((res)=>res.json())
-    .then ((json)=>console.log(json))
+    .then( data => {
+        //console.log(data)
+        
+        let temp = Math.round(data.main.temp)
+        //console.log(temp)
+        temperaturaValor.textContent = `${temp} ° C`
+
+        //console.log(data.weather[0].description)
+        let desc = data.weather[0].description
+        temperaturaDescripcion.textContent = desc.toUpperCase()
+        ubicacion.textContent = data.name
+        
+        vientoVelocidad.textContent = `${data.wind.speed} m/s`
+        
+        //iconos 
+        //let iconCode = data.main.icon
+        //const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
+        //icono.src = urlIcon
+    })
+        
     .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))
 
 
