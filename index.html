@@ -13,29 +13,34 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="banner">
 <button class="switch" id="switch">
     <span class="spanb"><i class="fa-solid fa-sun"></i></span>
     <span class="spanb"><i class="fa-solid fa-moon"></i></span>
 </button>
+<div class="displayClima">
+    <div class="caja">
+        <h1 id="ubicacion"></h2>
+        
+        <h3 id="temperatura-valor"></h3>
+        <h3 id="temperatura-descripcion"></h3>
+        <h3>Veloc. del Viento</h3>
+        <h3 id="viento-velocidad"></h3>
+    </div>
+</div>
+</div>
+
     <header>
         
         <h1 class="titulo">Libreta-MI</h1>
     </header>
-    
+   <section class="section1">
+
     <div class="divSaludo">
         <h2>Usuario</h2>
     </div>
 
-    <div class="displayClima">
-        <div class="caja">
-            <h1 id="ubicacion"></h2>
-            <img id="icono-animado" src="" alt="" height="128" width="128">
-            <h3 id="temperatura-valor"></h3>
-            <h3 id="temperatura-descripcion"></h3>
-            <h3>Veloc. del Viento</h3>
-            <h3 id="viento-velocidad"></h3>
-        </div>
-    </div>
+    
 
     <form action="">
         <input type="text" class="input">
@@ -50,6 +55,7 @@
             </div>    
         </ul>
     </div>
+</section> 
     <script src="main.js"></script>
 </body>
 </html>

@@ -3,29 +3,38 @@ const botonLista = document.querySelector('.boton-lista');
 const listaTareas = document.querySelector('.lista-tareas');
 
 let {value: nombre} = Swal.fire({
-	title: 'Hola!',
-	text: 'Ingrese su Nombre',
-	icon: 'question',
-	confirmButtonText: 'Ok',
-	backdrop: true,
-	allowOutsideClick: false,
-	stopKeydownPropagation: false,
-	input: 'text',
-	inputPlaceholder: 'Nombre',
+
+    title: 'Hola!',
+
+    text: 'Ingrese su Nombre',
+
+    icon: 'question',
+
+    confirmButtonText: 'Ok',
+
+    backdrop: true,
+
+    allowOutsideClick: false,
+
+    stopKeydownPropagation: false,
+
+    input: 'text',
+
+    inputPlaceholder: 'Nombre',
+
+})
+
+.then(resultado => {
+
+    if (resultado.value) {
+
+        const h2 = document.getElementsByTagName("h2")[0];
+
+    h2.innerText = `Bienvenido a tu libreta ${resultado.value}! `;
+
+    }
+
 });
-
-
-//let nombre = sessionStorage.getItem("nombre");
-//if(!nombre){
-//   nombre = prompt("Ingrese su Nombre");
-//    sessionStorage.setItem("nombre", JSON.stringify (nombre));
-//}
-
-
-//let nombre = prompt("Ingrese su nombre");
-const h2 = document.getElementsByTagName("h2")[0];
-h2.innerText = `Bienvenido a tu libreta ${nombre}! `;
-//sessionStorage.setItem("nombreUsuario", JSON.stringify(nombre));
 
 //Event Listener
 botonLista.addEventListener("click", anadirtarea);
