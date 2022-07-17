@@ -1,59 +1,28 @@
-const inputTareas = document.querySelector('.input');
-const botonLista = document.querySelector('.boton-lista');
-const listaTareas = document.querySelector('.lista-tareas');
-
-let {value: nombre} = Swal.fire({
-
-    title: 'Hola!',
-
-    text: 'Ingrese su Nombre',
-
-    icon: 'question',
-
-    confirmButtonText: 'Ok',
-
-    backdrop: true,
-
-    allowOutsideClick: false,
-
-    stopKeydownPropagation: false,
-
-    input: 'text',
-
-    inputPlaceholder: 'Nombre',
-
-})
-
-.then(resultado => {
-
-    if (resultado.value) {
-
-        const h2 = document.getElementsByTagName("h2")[0];
-
-    h2.innerText = `Bienvenido a tu libreta ${resultado.value}! `;
-
-    }
-
-});
-
-//Event Listener
-botonLista.addEventListener("click", anadirtarea);
-listaTareas.addEventListener("click", borrarCheckear)
-
-// Funciones
-
+window.addEventListener('load', () => {
+    
     let temperaturaValor = document.getElementById('temperatura-valor')  
     let temperaturaDescripcion = document.getElementById('temperatura-descripcion')  
-
+    
     let ubicacion = document.getElementById('ubicacion')  
     let iconoAnimado = document.getElementById('icono-animado') 
-
+    
     let vientoVelocidad = document.getElementById('viento-velocidad') 
+    
+    let apiKey = '36c912e4f5170f545ed41efcb4a76f6b'
 
-    //fetch('http://api.weatherstack.com/')
-    fetch('https://api.openweathermap.org/data/2.5/weather?id=3435907&lang=es&appid=36c912e4f5170f545ed41efcb4a76f6b')
-    .then ((res)=>res.json())
-    .then( data => {
+    let lat
+    let lon
+
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition( posicion => {
+            lon = posicion.coords.longitude
+            lat = posicion.coords.latitude
+
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`
+
+        fetch(url)
+        .then (res=>{return res.json()})
+        .then( data => {
         //console.log(data)
         
         let temp = Math.round(data.main.temp)
@@ -68,14 +37,71 @@ listaTareas.addEventListener("click", borrarCheckear)
         vientoVelocidad.textContent = `${data.wind.speed} m/s`
         
         //iconos 
-        //let iconCode = data.main.icon
-        //const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
-        //icono.src = urlIcon
-    })
+        let iconCode = data.weather[0].icon
+        const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
+        iconoAnimado.src = urlIcon
+        } )
+        .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))  
+        } )
+    }else{
+        fetch(`https://api.openweathermap.org/data/2.5/weather?id=3435907&lang=es&appid=${apiKey}&units=metric`)
+        .then (res=>{return res.json()})
+        .then( data => {
+        //console.log(data)
         
-    .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))
+        let temp = Math.round(data.main.temp)
+        //console.log(temp)
+        temperaturaValor.textContent = `${temp} ° C`
 
+        //console.log(data.weather[0].description)
+        let desc = data.weather[0].description
+        temperaturaDescripcion.textContent = desc.toUpperCase()
+        ubicacion.textContent = data.name
+        
+        vientoVelocidad.textContent = `${data.wind.speed} m/s`
+        
+        let iconCode = data.weather[0].icon
+        const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
+        iconoAnimado.src = urlIcon
+        } )
+        .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))
+    }
 
+    
+
+})
+
+const inputTareas = document.querySelector('.input');
+const botonLista = document.querySelector('.boton-lista');
+const listaTareas = document.querySelector('.lista-tareas');
+
+let {value: nombre} = Swal.fire({
+
+    title: 'Hola!',
+    text: 'Ingrese su Nombre',
+    icon: 'question',
+    confirmButtonText: 'Ok',
+    backdrop: true,
+    allowOutsideClick: false,
+    stopKeydownPropagation: false,
+    input: 'text',
+    inputPlaceholder: 'Nombre',
+})
+
+.then(resultado => {
+
+    if (resultado.value) {
+        const h2 = document.getElementsByTagName("h2")[0];
+        h2.innerText = `Bienvenido a tu libreta ${resultado.value}! `;
+    }
+
+});
+
+//Event Listener
+botonLista.addEventListener("click", anadirtarea);
+listaTareas.addEventListener("click", borrarCheckear)
+
+// Funciones
 
 function anadirtarea(event){
     //Evitar que se refresque la pagina
@@ -128,3 +154,4 @@ function borrarCheckear(event){
         }
 
 }
+
