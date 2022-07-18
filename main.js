@@ -75,30 +75,44 @@ const inputTareas = document.querySelector('.input');
 const botonLista = document.querySelector('.boton-lista');
 const listaTareas = document.querySelector('.lista-tareas');
 
-let {value: nombre} = Swal.fire({
+let nombreGuardado
 
-    title: 'Hola!',
-    text: 'Ingrese su Nombre',
-    icon: 'question',
-    confirmButtonText: 'Ok',
-    backdrop: true,
-    allowOutsideClick: false,
-    stopKeydownPropagation: false,
-    input: 'text',
-    inputPlaceholder: 'Nombre',
-})
+function tomarLocalStorage (){
+  if(localStorage.getItem('nombre')){
+    const h2 = document.getElementsByTagName("h2")[0];
+    h2.innerText = `Bienvenido a tu libreta ${localStorage.getItem("nombre")}! `;
+  }else{
+    let {value: nombre} = Swal.fire({
 
-.then(resultado => {
+      title: 'Hola!',
+      text: 'Ingrese su Nombre',
+      icon: 'question',
+      confirmButtonText: 'Ok',
+      backdrop: true,
+      allowOutsideClick: false,
+      stopKeydownPropagation: false,
+      input: 'text',
+      inputPlaceholder: 'Nombre',
+  })
+  
+  .then(resultado => {
+  
+      if (resultado.value) {
+          const h2 = document.getElementsByTagName("h2")[0];
+          h2.innerText = `Bienvenido a tu libreta ${resultado.value}! `;
+          nombreGuardado = resultado.value
+          console.log(nombreGuardado)
+          localStorage.setItem('nombre',nombreGuardado)
+      }
+  
+  });
+  }
+}
 
-    if (resultado.value) {
-        const h2 = document.getElementsByTagName("h2")[0];
-        h2.innerText = `Bienvenido a tu libreta ${resultado.value}! `;
-    }
+tomarLocalStorage();
 
-});
 
 //Event Listener
-document.addEventListener("DOMContentLoaded", buscarTareas);
 botonLista.addEventListener("click", anadirtarea);
 listaTareas.addEventListener("click", borrarCheckear)
 
@@ -115,7 +129,6 @@ function anadirtarea(event){
     nuevatarea.innerText = inputTareas.value;
     nuevatarea.classList.add('item-tarea');
     divtareas.appendChild(nuevatarea);
-    guardarTareas(inputTareas.value);
     //Botones
     const botoncompletado = document.createElement('boton');
     botoncompletado.innerHTML = `<i class="fas fa-check"></i>`;
@@ -157,56 +170,3 @@ function borrarCheckear(event){
 
 }
 
-function guardarLocal(tarea) {
-    let tareas;
-    if (localStorage.getItem("tareas") === null) {
-      tareas = [];
-    } else {
-      tareas = JSON.parse(localStorage.getItem("tareas"));
-    }
-    tarea.push(tarea);
-    localStorage.setItem("tareas", JSON.stringify(tareas));
-  }
-  function borrarLocal(tarea) {
-    let tareas;
-    if (localStorage.getItem("tareas") === null) {
-      tareas = [];
-    } else {
-      tareas = JSON.parse(localStorage.getItem("tareas"));
-    }
-    const indexTarea = tarea.children[0].innerText;
-    tareas.splice(tareas.indexOf(indexTarea), 1);
-    localStorage.setItem("tareas", JSON.stringify(tareas));
-  }
-
-  function buscarTareas() {
-    let tareas;
-    if (localStorage.getItem("tareas") === null) {
-      tareas = [];
-    } else {
-      tareas = JSON.parse(localStorage.getItem("tareas"));
-    }
-    tareas.forEach(function(tarea) {
-    // Div de Tareas
-    const divtareas = document.createElement('div');
-    divtareas.classList.add('tarea');
-    // Lista
-    const nuevatarea = document.createElement('li');
-    nuevatarea.innerText = tarea;
-    nuevatarea.classList.add('item-tarea');
-    divtareas.appendChild(nuevatarea);
-    //Botones
-    const botoncompletado = document.createElement('boton');
-    botoncompletado.innerHTML = `<i class="fas fa-check"></i>`;
-    botoncompletado.classList.add("btn-compl");
-    divtareas.appendChild(botoncompletado);
-
-    const botontachar = document.createElement('boton');
-    botontachar.innerHTML = `<i class="fas fa-trash"></i>`;
-    botontachar.classList.add("btn-tach");
-    divtareas.appendChild(botontachar);
-
-    //Añadir a la lista
-    listaTareas.appendChild(divtareas);
-});
-}
