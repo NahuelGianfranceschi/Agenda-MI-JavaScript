@@ -37,9 +37,9 @@ window.addEventListener('load', () => {
         vientoVelocidad.textContent = `${data.wind.speed} m/s`
         
         //iconos 
-        let iconCode = data.weather[0].icon
-        const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
-        iconoAnimado.src = urlIcon
+        //let iconCode = data.weather[0].icon
+        //const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
+        //iconoAnimado.src = urlIcon
         } )
         .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))  
         } )
@@ -60,9 +60,9 @@ window.addEventListener('load', () => {
         
         vientoVelocidad.textContent = `${data.wind.speed} m/s`
         
-        let iconCode = data.weather[0].icon
-        const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
-        iconoAnimado.src = urlIcon
+        //let iconCode = data.weather[0].icon
+        //const urlIcon = `http://openweathermap.org/img/wn/${iconCode}.png`                     
+        //iconoAnimado.src = urlIcon
         } )
         .catch ((error)=>alert("No se encontro la informacion, vuelve a intentarlo más tarde"+error))
     }
@@ -98,6 +98,7 @@ let {value: nombre} = Swal.fire({
 });
 
 //Event Listener
+document.addEventListener("DOMContentLoaded", buscarTareas);
 botonLista.addEventListener("click", anadirtarea);
 listaTareas.addEventListener("click", borrarCheckear)
 
@@ -114,6 +115,7 @@ function anadirtarea(event){
     nuevatarea.innerText = inputTareas.value;
     nuevatarea.classList.add('item-tarea');
     divtareas.appendChild(nuevatarea);
+    guardarTareas(inputTareas.value);
     //Botones
     const botoncompletado = document.createElement('boton');
     botoncompletado.innerHTML = `<i class="fas fa-check"></i>`;
@@ -155,3 +157,56 @@ function borrarCheckear(event){
 
 }
 
+function guardarLocal(tarea) {
+    let tareas;
+    if (localStorage.getItem("tareas") === null) {
+      tareas = [];
+    } else {
+      tareas = JSON.parse(localStorage.getItem("tareas"));
+    }
+    tarea.push(tarea);
+    localStorage.setItem("tareas", JSON.stringify(tareas));
+  }
+  function borrarLocal(tarea) {
+    let tareas;
+    if (localStorage.getItem("tareas") === null) {
+      tareas = [];
+    } else {
+      tareas = JSON.parse(localStorage.getItem("tareas"));
+    }
+    const indexTarea = tarea.children[0].innerText;
+    tareas.splice(tareas.indexOf(indexTarea), 1);
+    localStorage.setItem("tareas", JSON.stringify(tareas));
+  }
+
+  function buscarTareas() {
+    let tareas;
+    if (localStorage.getItem("tareas") === null) {
+      tareas = [];
+    } else {
+      tareas = JSON.parse(localStorage.getItem("tareas"));
+    }
+    tareas.forEach(function(tarea) {
+    // Div de Tareas
+    const divtareas = document.createElement('div');
+    divtareas.classList.add('tarea');
+    // Lista
+    const nuevatarea = document.createElement('li');
+    nuevatarea.innerText = tarea;
+    nuevatarea.classList.add('item-tarea');
+    divtareas.appendChild(nuevatarea);
+    //Botones
+    const botoncompletado = document.createElement('boton');
+    botoncompletado.innerHTML = `<i class="fas fa-check"></i>`;
+    botoncompletado.classList.add("btn-compl");
+    divtareas.appendChild(botoncompletado);
+
+    const botontachar = document.createElement('boton');
+    botontachar.innerHTML = `<i class="fas fa-trash"></i>`;
+    botontachar.classList.add("btn-tach");
+    divtareas.appendChild(botontachar);
+
+    //Añadir a la lista
+    listaTareas.appendChild(divtareas);
+});
+}
